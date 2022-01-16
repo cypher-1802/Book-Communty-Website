@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" integrity="undefined" crossorigin="anonymous">   
+
+    <title>Preview</title>
+</head>
+<body>
+
+    {% block body %}
+
+            <h3><b>{{response.title|safe}}</h3></b>
+
+            <img src = {{response.imageLinks.thumbnail|safe}}><br>
+
+            <h5><b>Authors :</b></h5>
+            {% for i in response.authors %}
+                {{i|safe}}
+            {% endfor %}<br><br>
+
+            <h5><b>Genre : </b></h5>
+            {% for i in response.categories %}
+                {{i|safe}}
+            {% endfor %}<br><br>
+
+            <h5><b>Description : </b><br></h5>
+            {{response.description|safe}}<br><br>
+
+            <h5><b>Ratings : </h5>
+            {{response.averageRating|safe}}</b><br>
+            </p><br>
+
+        
+    {% endblock %}
+</body>
+</html>
