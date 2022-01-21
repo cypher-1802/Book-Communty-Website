@@ -1,0 +1,30 @@
+.navbar-brand{
+    margin-left: 15px;
+  }
+  .nav-item{
+    margin: 0 4px;
+  }
+  .search{
+    margin-right: 45px;
+    margin-top: 7px;
+  }
+
+  
+.container{
+    margin-top: 5px;
+    background-color: bisque;
+}
+.signup-text{
+    text-align: center;
+    margin: 5% 23%;
+}
+.texts{
+margin:1.5px;
+}
+.texts:focus{
+    outline: none;
+    box-shadow: none;
+}
+.btn{
+    margin-top: 2%;
+}
