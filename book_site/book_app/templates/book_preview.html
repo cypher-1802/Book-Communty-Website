@@ -1,36 +1,235 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" integrity="undefined" crossorigin="anonymous">   
+{% load static %}
+<html><head>
+    <!-- Bootstrap stylesheet -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704
+    +h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>  
 
-    <title>Preview</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>  
+
+    
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/b1fb33998f.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/solid.css">
+
+
+    <!-- CSS-stylesheet -->
+    <link rel= "stylesheet" href="{% static 'CSS/indivBkPg.css' %}">
+
+
+
+
 </head>
-<body>
 
-    {% block body %}
+  <!-- BODY -->
+  <body>
+    
 
-            <h3><b>{{response.title|safe}}</h3></b>
+    <!-- NAVBAR-SECTION -->
+    <section id ="Navbar">
+        <div class ="container-nav">
+            <nav class="navbar bg-dark navbar-expand-lg navbar-dark">
+                <a class="navbar-brand" href="Main.html"><i class="far fa-circle"></i>  Library</a>
+                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="Main.html">Explore</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="signup nav-item">
+                        <a class="nav-link" href="{% url 'signup' %}">Sign-Up</a>
+                    </li> 
+                </ul>
+            </div>
+             
+            </nav>        </div>
 
-            <img src = {{response.imageLinks.thumbnail|safe}}><br>
+<div class = "bg">
 
-            <h5><b>Authors :</b></h5>
-            {% for i in response.authors %}
-                {{i|safe}}
-            {% endfor %}<br><br>
+	<div class = "left-side">
 
-            <h5><b>Genre : </b></h5>
-            {% for i in response.categories %}
-                {{i|safe}}
-            {% endfor %}<br><br>
+		<div class = "prelim bottom-line-drawer-a">
+	
+			<div class = "poster">
+				<img class = "book-cover" src = {{response.imageLinks.thumbnail|safe}}>
+			</div>
 
-            <h5><b>Description : </b><br></h5>
-            {{response.description|safe}}<br><br>
+			<div class = "pre-inf box">
+				<h3>{{response.title|safe}}</h3>
+				<div class = "basic-info">
+					<p style = "margin: 0px;"><b>Author: </b>
+						{% for i in response.authors %}
+                			{{i|safe}}
+            			{% endfor %}
+					</p>
+					<p style = "margin: 0px;"><b>Rating: </b>{{response.averageRating|safe}}</p>
+				</div>
 
-            <h5><b>Ratings : </h5>
-            {{response.averageRating|safe}}</b><br>
-            </p><br>
+				<p style = "margin-top: 0px;"><b>Genre:&nbsp</b>
+					{% for i in response.categories %}
+                		{{i|safe}}
+            		{% endfor %}
+				</p>
 
-        
-    {% endblock %}
+				<div class = "summary">
+					<p>{{response.description|safe}}</p>
+				</div>
+
+				{% if request.user.is_authenticated %}
+					<form method = "POST">
+						{% csrf_token %}
+						<h6><b><label for = "to-read">Want to read this book? Add this to your to-read list:</label>
+						<input type = "checkbox" id = "to-read" name = "status1" value = "to-read" onclick = "alert('Book added to your read list')"><br><br>
+						<label for = "finished">Already read this book? Add this to your collection:</label>
+						<input type = "checkbox" id = "finished" name = "status2" value = "finished" onclick = "alert('Book added to collection')"><br><br>
+						<button type = "submit">Submit</button></b></h6>
+					</form>
+				{% endif %} 
+
+			</div>
+
+		</div>
+
+	<div class = "disc box">
+        <h3>Discussion Forum</h3>
+		{% for message in discussion %}
+		<div class = "box bottom-line-drawer-b">
+			<div class = "hz-property">
+				<img class = "profile-img" src = "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1344409006l/142296.jpg"><!--Add profile-->
+				<div class = "profile-text">
+					<p style="margin: 0px;">{{message.username.user.username}}</p>
+					<p style="margin: 0px;">Posted on : {{message.created_on}}</p>
+					<p style="margin: 0px;">Bio or whatever</p>	<!--Add bio-->
+				</div>
+			</div>
+			<p class = "opinion">{{message.message}}</p>
+		
+		{% endfor %}
+		
+		</div>
+<!-- 
+		<br>
+
+		<div class = "box bottom-line-drawer-b">
+			<div class = "hz-property">
+				<img class = "profile-img" src = "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1344409006l/142296.jpg">
+				<div class = "profile-text">
+					<p style="margin: 0px;">Username2 rated n stars</p>
+					<p style="margin: 0px;">Bio or whatever</p>
+				</div>
+			</div>
+			<p class = "opinion">Opinion 2: This is my opinion This is my opinion This is my opinion This is my opinion This is my opinion This is my opinion This is my opinion</p>
+		</div>
+
+		<br>
+
+		<div class = "box bottom-line-drawer-b">
+			<div class = "hz-property">
+				<img class = "profile-img" src = "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1344409006l/142296.jpg">
+				<div class = "profile-text">
+					<p style="margin: 0px;">Username3 rated n stars</p>
+					<p style="margin: 0px;">Bio or whatever</p>
+				</div>
+			</div>
+			<p class = "opinion">Opinion 3: This is my opinion This is my opinion This is my opinion This is my opinion This is my opinion This is my opinion This is my opinion</p>
+		</div>
+
+		<br>
+
+		<div class = "box bottom-line-drawer-b">
+			<div class = "hz-property">
+				<img class = "profile-img" src = "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1344409006l/142296.jpg">
+				<div class = "profile-text">
+					<p style="margin: 0px;">Username4 rated n stars</p>
+					<p style="margin: 0px;">Bio or whatever</p>
+				</div>
+			</div>
+			<p class = "opinion">Opinion 4: This is my opinion This is my opinion This is my opinion This is my opinion This is my opinion This is my opinion This is my opinion</p>
+		</div>
+
+		<br> -->
+
+	<!-- <label id="head2">What do you feel about this book?</label><br><br><br>
+        <textarea placeholder="Enter your comments here..."></textarea> -->
+		{% if request.user.is_authenticated %}
+			<form action = "" method = "POST">
+				{% csrf_token %}
+				<p>Discussion Forum</p>
+				<label for="mess"></label>
+				<textarea id="mess" name="mess" rows="8" cols="100">Take part in Discussion</textarea>
+				<br>
+				<button type="submit" name="message">Post</button>
+			</form>
+		{% endif %}  
+
+	</div>
+	<br><br>
+	
+	</div>
+
+	<div class = "right-side">
+
+		<div class = "box right-side-stuff bottom-line-drawer-b">
+			{% if request.user.is_authenticated %}
+			<h3>Trade this book</h3>
+			<p>Some content if we want...</p>
+			<form action="{%url 'trade' id%}" method='POST'>
+				{%csrf_token%}
+				<button type="submit">Trade Books</button>
+			{% endif %}
+			</form>
+		</div>
+
+		<div class = "box right-side-stuff bottom-line-drawer-c">
+			<h3>More books like this...</h3>
+			<div class = "similar">
+				<img class = "more-books" src = "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1344409006l/142296.jpg">
+				<img class = "more-books" src = "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1344409006l/142296.jpg">
+			</div>
+		</div>
+
+		<div class = "box right-side-stuff bottom-line-drawer-b">
+			<h3>Quotes</h3>
+			<p>This is a wonderful quote This is a wonderful quote This is a wonderful quote This is a wonderful quote This is a wonderful quote This is a wonderful quote This is a wonderful quote</p>
+		</div>
+
+		<div class = "box right-side-stuff bottom-line-drawer-b">
+			<h3>About the author</h3>
+			<p>Author info Author info Author info Author info Author info Author info Author info Author info Author info Author info Author info Author info Author info </p>
+		</div>
+
+		<div class = "box right-side-stuff bottom-line-drawer-c">
+			<h3>More from this author...</h3>
+			<div class = "similar">
+				<img class = "more-books" src = "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1344409006l/142296.jpg">
+				<img class = "more-books" src = "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1344409006l/142296.jpg">
+			</div>
+		</div>
+		
+	</div>
+
+</div>
+
+
+<section id = "footer">
+        <div class = "footer">
+            <i class="footer-img fab fa-facebook"></i>
+            <i class="footer-img fab fa-twitter"></i>
+            <i class="footer-img fab fa-instagram"></i>
+            <i class="footer-img fas fa-envelope"></i>
+            <p class = "footer-text">� Copyright 2022 PBL</p>
+        </div>
+    </section>
 </body>
 </html>
