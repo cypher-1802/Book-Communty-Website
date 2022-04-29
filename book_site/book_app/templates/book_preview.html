@@ -121,7 +121,6 @@
 		{% if request.user.is_authenticated %}
 		<form id = "form" action = "" method = "POST">
 			{% csrf_token %}
-			<p>Discussion Forum</p>
 			<label for="mess">What do you feel about this book?</label>
 			<textarea id="mess" name="mess" rows="8" cols="100">Enter your comments here...</textarea>
 			<br>
@@ -155,25 +154,46 @@
 			</form>
 		</div>
 
+	<!-- MORE BOOKS LIKE THIS -->
+
 		<div class = "box right-side-stuff bottom-line-drawer-c">
 			<h3 class="heading">More books like this...</h3>
+			{% for i in s_genre %}
 			<div class = "similar">
-				<img class = "more-books" src = "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1344409006l/142296.jpg">
-				<img class = "more-books" src = "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1344409006l/142296.jpg">
+				<img class = "more-books" src = {{i.cover}}>
+				<div class = "bk-info">
+                    <h6><a href = "{% url 'book_preview' i.id %}">{{i.title}}</a></h6>
+                    <h6><b>Author:</b>
+                        {% for i in i.author %}
+                        {{i}}
+                        {% endfor %}
+                    </h6>
+                    <h6><b>Rating:</b> {{i.rating}}</h6>
+                  </div>
 			</div>
+			{% endfor %}
 		</div>
+
+	<!-- ABOUT THE AUTHOR -->
 
 		<div class = "box right-side-stuff bottom-line-drawer-b">
 			<h3 class="heading">About the author</h3>
 			<p>{{result}}</p>
 		</div>
 
+	<!-- MORE FROM THIS AUTHOR -->
+
 		<div class = "box right-side-stuff bottom-line-drawer-c">
 			<h3 class="heading">More from this author...</h3>
+			{% for i in s_auth %}
 			<div class = "similar">
-				<img class = "more-books" src = "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1344409006l/142296.jpg">
-				<img class = "more-books" src = "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1344409006l/142296.jpg">
+				<img class = "more-books" src = {{i.cover}}>
+				<div class = "bk-info">
+                    <h6><a href = "{% url 'book_preview' i.id %}">{{i.title}}</a></h6>
+                    <h6><b>Rating:</b> {{i.rating}}</h6>
+                  </div>
 			</div>
+			{% endfor %}
 		</div>
 		
 	</div>

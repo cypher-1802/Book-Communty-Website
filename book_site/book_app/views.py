@@ -80,6 +80,7 @@ def search(request, name):
 #------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------
 
+#*************************
 def book_preview(request, id):  # renders the book details. Records to_read and library of user and opens discussion forum.
 
     id = requests.get('https://www.googleapis.com/books/v1/volumes/'+id+'?key=AIzaSyC887_T5c9ZEkD9tMzzDB2e_1Dv_5sJ7L0').json()
@@ -92,6 +93,13 @@ def book_preview(request, id):  # renders the book details. Records to_read and 
         result = wikipedia.summary("{}".format(auth))
     except:
         result = wikipedia.summary("{}(Author) ".format(auth))
+
+#--------------------------------------Sorting wrt Genre and Author---------------------------------------------------------------------------------
+
+    gnr = response['categories'][0]
+
+    s_auth = author(auth, '3', 'relevance')
+    s_genre = genre(gnr, '3', 'relevance')
 
 #--------------------------------Discussion Objects Display-------------------------------------------------------------------------
 
@@ -152,13 +160,13 @@ def book_preview(request, id):  # renders the book details. Records to_read and 
                 mess = request.POST.get('mess')
                 d = Discussion(username = Book_User.objects.get(user = request.user), book_id = id['id'], message = mess)
                 d.save()
-                return render(request, 'book_preview.html', {'response':response, 'discussion':discussion, 'result':result, 'id':id['id']})
+                return render(request, 'book_preview.html', {'response':response, 'discussion':discussion, 'result':result, 'id':id['id'], 's_genre':s_genre, 's_auth':s_auth})
 
 
     except:
         pass
     
-    return render(request, 'book_preview.html', {'response':response, 'discussion':discussion, 'result':result, 'id':id['id']})
+    return render(request, 'book_preview.html', {'response':response, 'discussion':discussion, 'result':result, 'id':id['id'], 's_genre':s_genre, 's_auth':s_auth})
 
 #------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------
@@ -201,18 +209,14 @@ def trd(request):
     pass
 
 #--------------------------------Displays book by Genre------------------------------------------------------------------------------------
-def genre(genre):
-    response = requests.get('https://www.googleapis.com/books/v1/volumes?q=subject:'+genre+'&maxResults=40&orderBy=newest&key=AIzaSyC887_T5c9ZEkD9tMzzDB2e_1Dv_5sJ7L0').json()['items']
-    L = dict_creator(response)
-
-    return L
+def genre(genre, n, order):
+    response = requests.get('https://www.googleapis.com/books/v1/volumes?q=subject:'+genre+'&maxResults='+n+'&orderBy='+order+'&key=AIzaSyC887_T5c9ZEkD9tMzzDB2e_1Dv_5sJ7L0').json()['items']
+    return dict_creator(response)
 
 #--------------------------------Displays book by Author------------------------------------------------------------------------------------
-def author(author):
-    response = requests.get('https://www.googleapis.com/books/v1/volumes?q=inauthor:'+author+'&maxResults=40&orderBy=newest&key=AIzaSyC887_T5c9ZEkD9tMzzDB2e_1Dv_5sJ7L0').json()['items']
-    L = dict_creator(response)
-
-    return L
+def author(author, n, order):
+    response = requests.get('https://www.googleapis.com/books/v1/volumes?q=inauthor:'+author+'&maxResults='+n+'&orderBy='+order+'&key=AIzaSyC887_T5c9ZEkD9tMzzDB2e_1Dv_5sJ7L0').json()['items']
+    return dict_creator(response)
 
 #--------------------------------Creates dictionary of fields-------------------------------------------------------------------------------
 def dict_creator(response):
