@@ -49,7 +49,11 @@
 
 
     <!-- CSS-stylesheet -->
+    <link rel= "stylesheet" href="{% static 'CSS/navbar-footer.css' %}">
+
     <link rel= "stylesheet" href="{% static 'CSS/login.css' %}">
+
+
 </head>
 
   <!-- BODY -->
@@ -76,12 +80,7 @@
                         <a class="nav-link" href="{% url 'signup' %}">Sign-Up</a>
                     </li> 
                 </ul>
-            </div>
-                <div class ="search nav-item">
-                    <input type="text" class="mainLoginInput" placeholder="Search">
-                    <!-- <input type="text" placeholder="&#xF002 Search"> -->
-                </div>
-             
+            </div>     
             </nav>
         </div>        
     </section>
@@ -90,9 +89,9 @@
         <div class="container" id="wrap">
             <div class="row">
               <div class="login-text col-md-4 col-md-offset-2">
-                  <form action="{%url 'login'%}" method="POST" accept-charset="utf-8" class="form" role="form"> 
-                    {% csrf_token %}
-
+                  <form action="{%url 'login'%}" method="POST" accept-charset="utf-8" class="form" role="form">  
+                    {%csrf_token%}
+                    
                           <input type="text" name="username" value="" class="texts form-control input-lg" placeholder="Username" />
                           <input type="password" name="password" value="" class="texts form-control input-lg" placeholder="Password"  />
                           <br />
@@ -103,5 +102,16 @@
       </div>            
       </div>
     </section>
+    <section id = "footer">
+        <div class = "footer">
+            <i class="footer-img fab fa-facebook"></i>
+            <i class="footer-img fab fa-twitter"></i>
+            <i class="footer-img fab fa-instagram"></i>
+            <i class="footer-img fas fa-envelope"></i>
+            <p class = "footer-text">© Copyright 2022 PBL</p>
+        </div>
+    </section>
+
+
     </body>
     </html>

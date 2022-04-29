@@ -50,21 +50,24 @@
 	background-color: #FFEDDB
 }
 
+/*
 <!---
 body{
 	color: rgb(21, 114, 161);
 }
 --->
+*/
 
 .left-side{
-	width: 60%;
+	width: 66%;
+	/*
 <!---	margin-left: 4vw;
 	margin-top: 4vw;
 	margin-right: 1vw;
 	margin-bottom: 2vw;
 	border: solid;
 	border-color: red;
---->
+--->*/
 }
 
 .prelim{
@@ -140,11 +143,11 @@ body{
 
 .opinion{
 	margin-left: 60px;
-	margin: right: 10px;	
+	/*margin: right: 10px;*/	
 }
 
 .right-side{
-	width: 25%;
+	width: 30%;
 	margin-right: 4vw;
 	margin-left: 0vw;
 	margin-top: 4vw;
@@ -157,9 +160,11 @@ body{
 }
 
 .more-books{
-	width: 60%;;
-	height: 10vw;
-	margin: auto;
+	width: 50%;;
+	/*height: 10vw;*/
+	height: auto;
+	/*margin: auto;*/
+	margin: 0.5vw;
 	
 }
 

@@ -1,12 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now
+import os, random
 
 # Create your models here.
 class Book_User(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
-    #image = models.ImageField(upload_to = 'images', default = 'default/user.png')      USER PROFILE
-    #bio = models.CharField(null = True, max_length = 100)
+    image = models.ImageField(upload_to = 'images/users', default = 'images/default/' + random.choice(os.listdir(path = 'media/images/default')))
+    bio = models.CharField(null = True, max_length = 100)
     to_read_list = models.TextField(null = True, blank = True)
     library = models.TextField(null = True, blank = True)
 

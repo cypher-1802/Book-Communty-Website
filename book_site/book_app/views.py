@@ -3,9 +3,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-import requests
+import requests, wikipedia
 from .models import Book_User, Read, Discussion, Add_Books, Books
-
 
 
 #------------------------------------------------------------------------------------------------------------------------------------
@@ -68,32 +67,13 @@ def home(request):
         return search(request, name)
     return render(request, 'home.html')
 
+def main(request):
+    return render(request, 'Main.html')
+
 def search(request, name):
-    L = []
+    #API CALL
     response = requests.get('https://www.googleapis.com/books/v1/volumes?q=intitle:'+name+'&key=AIzaSyC887_T5c9ZEkD9tMzzDB2e_1Dv_5sJ7L0').json()['items']
-    
-    for data in response:
-        D = {}
-        data_new = data['volumeInfo']
-        D['id'] = data['id']
-        D['title'] = data_new['title']
-
-        try:
-            D['author'] = data_new['authors'] 
-        except:
-            D['author'] = "NA"
-
-        try:
-            D['rating'] = data_new['averageRating']
-        except:
-            D['rating'] = 'NA'
-
-        try:
-            D['cover'] = data_new['imageLinks']['thumbnail']
-        except:
-            D['cover'] = 'https://image.shutterstock.com/image-vector/no-image-available-icon-fow-260nw-1690416772.jpg'
-
-        L.append(D)
+    L = dict_creator(response)
 
     return render(request, 'search.html', {'response':L})
 
@@ -104,6 +84,14 @@ def book_preview(request, id):  # renders the book details. Records to_read and 
 
     id = requests.get('https://www.googleapis.com/books/v1/volumes/'+id+'?key=AIzaSyC887_T5c9ZEkD9tMzzDB2e_1Dv_5sJ7L0').json()
     response = id['volumeInfo']
+
+#--------------------------------------About Author---------------------------------------------------------------------------------
+
+    auth = response['authors'][0]
+    try:
+        result = wikipedia.summary("{}".format(auth))
+    except:
+        result = wikipedia.summary("{}(Author) ".format(auth))
 
 #--------------------------------Discussion Objects Display-------------------------------------------------------------------------
 
@@ -164,13 +152,13 @@ def book_preview(request, id):  # renders the book details. Records to_read and 
                 mess = request.POST.get('mess')
                 d = Discussion(username = Book_User.objects.get(user = request.user), book_id = id['id'], message = mess)
                 d.save()
-                return render(request, 'book_preview.html', {'response':response, 'discussion':discussion, 'id':id['id']})
+                return render(request, 'book_preview.html', {'response':response, 'discussion':discussion, 'result':result, 'id':id['id']})
 
 
     except:
         pass
     
-    return render(request, 'book_preview.html', {'response':response, 'discussion':discussion, 'id':id['id']})
+    return render(request, 'book_preview.html', {'response':response, 'discussion':discussion, 'result':result, 'id':id['id']})
 
 #------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------
@@ -189,6 +177,7 @@ def trade(request, id):
 #------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------
 
+@login_required
 def add_books(request, id):
 
 #--------------------------------Opens page for adding books------------------------------------------------------------------------------------
@@ -204,3 +193,52 @@ def add_books(request, id):
         return render(request, 'add.html', {'id':id})
 
     return render(request, 'add.html', {'id':id})
+
+def profile(request):
+    pass
+
+def trd(request):
+    pass
+
+#--------------------------------Displays book by Genre------------------------------------------------------------------------------------
+def genre(genre):
+    response = requests.get('https://www.googleapis.com/books/v1/volumes?q=subject:'+genre+'&maxResults=40&orderBy=newest&key=AIzaSyC887_T5c9ZEkD9tMzzDB2e_1Dv_5sJ7L0').json()['items']
+    L = dict_creator(response)
+
+    return L
+
+#--------------------------------Displays book by Author------------------------------------------------------------------------------------
+def author(author):
+    response = requests.get('https://www.googleapis.com/books/v1/volumes?q=inauthor:'+author+'&maxResults=40&orderBy=newest&key=AIzaSyC887_T5c9ZEkD9tMzzDB2e_1Dv_5sJ7L0').json()['items']
+    L = dict_creator(response)
+
+    return L
+
+#--------------------------------Creates dictionary of fields-------------------------------------------------------------------------------
+def dict_creator(response):
+    L = []
+
+    for data in response:
+        D = {}
+        data_new = data['volumeInfo']
+        D['id'] = data['id']
+        D['title'] = data_new['title']
+
+        try:
+            D['author'] = data_new['authors'] 
+        except:
+            D['author'] = "NA"
+
+        try:
+            D['rating'] = data_new['averageRating']
+        except:
+            D['rating'] = 'NA'
+
+        try:
+            D['cover'] = data_new['imageLinks']['thumbnail']
+        except:
+            D['cover'] = 'https://image.shutterstock.com/image-vector/no-image-available-icon-fow-260nw-1690416772.jpg'
+
+        L.append(D)
+
+    return L

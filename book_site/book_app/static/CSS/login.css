@@ -2,13 +2,12 @@
     margin-left: 15px;
   }
   .nav-item{
-    margin: 0 4px;
+    margin: 0 20px;
   }
   .search{
-    margin-right: 45px;
+    text-align: center;
     margin-top: 7px;
   }
-
 .container{
     width:50%;
     margin: auto;

@@ -52,56 +52,46 @@
 
 
     <!-- CSS-stylesheet -->
+    <link rel= "stylesheet" href="{% static 'CSS/navbar-footer.css' %}">
     <link rel= "stylesheet" href="{% static 'CSS/signup.css' %}">
+    
 </head>
 
   <!-- BODY -->
   <body>
-    
-
-    <!-- NAVBAR-SECTION -->
+      <!-- NAVBAR-SECTION -->
     <section id ="Navbar">
-        <div class ="container-nav">
-            <nav class="navbar bg-dark navbar-expand-lg navbar-dark">
-                <a class="navbar-brand" href="Main.html"><i class="far fa-circle"></i>  Library</a>
-                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="Main.html">Explore</a><!--Landing page-->
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Login</a>
-                    </li>
-                    <li class="signup nav-item">
-                        <a class="nav-link" href="{% url 'signup' %}">Sign-Up</a>
-                    </li> 
-                </ul>
-            </div>
-                <div class ="search nav-item">
-                    <input type="text" class="mainLoginInput" placeholder="Search">
-                    <!-- <input type="text" placeholder="&#xF002 Search"> -->
-                </div>
-             
-            </nav>
-        </div>        
-    </section>
+      <nav class="navbar bg-dark navbar-expand navbar-dark">
+          <a class="navbar-brand" href="Main.html"><i class="far fa-circle"></i> Library</a>
 
+              <ul class="navbar-nav ms-auto">
+                  <li class="nav-item">
+                      <a class="nav-link" href="Main.html">Explore</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'login' %}">Login</a>
+                  </li>
+                  <li class="signup nav-item">
+                      <a class="nav-link" href="{% url 'signup' %}">Sign-Up</a>
+                  </li> 
+              </ul>
+      </nav>      
+</section>
+
+<!-- Sign-Up Section  -->
     <section id = "signup">
         <div class="container" id="wrap">
             <div class="row">
-              <div class="signup-text col-md-6 col-md-offset-3">
+              <div class="signup-text col-7 col-md-6 col-md-offset-3">
                   <form method="POST" accept-charset="utf-8" class="form" role="form">
-                    {% csrf_token %}  
-                    <legend>Sign Up</legend>
+                    {%csrf_token%}
+                       <legend>Sign Up</legend>
                           <h5>You're seconds away from accessing all our best stories!</h5>
                           <div class="row">
-                              <div class="col-xs-6 col-md-6">
+                              <div class="col-6 col-md-6">
                                 <input type="text" name="first_name" value="" class="texts form-control input-lg" placeholder="First Name">  
                               </div>
-                              <div class="col-xs-6 col-md-6">
+                              <div class="col-6 col-md-6">
                                   <input type="text" name="last_name" value="" class="texts form-control input-lg" placeholder="Last Name"  />                        
                               </div>
                           </div>
@@ -110,18 +100,26 @@
                           <input type="password" name="password" value="" class="texts form-control input-lg" placeholder="Password"  />
                           <input type="password" name="confirm_password" value="" class="texts form-control input-lg" placeholder="Confirm Password">                  
                           <div class="row">
-                              <!-- <div class="col-xs-4 col-md-4">                    
-                                   </div> -->
                           </div>
                           <br />
                     <span class="help-block">By clicking Create my account, you agree to our Terms and that you have read our Data Use Policy, including our Cookie Use.<br> </span>
-                          <input type="submit" class="btn btn-outline-dark" value = "Create my account"/>
-
-                            <!-- <input type="submit" name="Sign Up" value="Sign up" /> -->
+                          <button type="submit" class="btn btn-outline-dark">
+                              Create my account</button>
                   </form>          
                 </div>
       </div>            
       </div>
     </section>
+
+<!-- Footer Section  -->
+<section id = "footer">
+  <div class = "footer">
+    <a href ="https://www.facebook.com/" target="_blank"><i class="footer-img fab fa-facebook"></i></a>
+    <a href ="https://www.twitter.com/" target="_blank"><i class="footer-img fab fa-twitter"></i></a>
+    <a href ="https://www.instagram.com/" target="_blank"><i class="footer-img fab fa-instagram"></i></a>
+    <a href ="https://www.gmail.com/" target="_blank"><i class="footer-img fas fa-envelope"></i></a>
+    <p class = "footer-text">© Copyright 2022 PBL</p>
+  </div>
+</section>
     </body>
     </html>
