@@ -49,7 +49,7 @@
 
 
     <!-- CSS-stylesheet -->
-    <link rel= "stylesheet" href="{% static 'CSS/navbar-footer.css' %}">
+    <link rel= "stylesheet" href="{% static 'CSS/nav-footer.css' %}">
 
     <link rel= "stylesheet" href="{% static 'CSS/login.css' %}">
 
@@ -63,15 +63,15 @@
     <!-- NAVBAR-SECTION -->
     <section id ="Navbar">
         <div class ="container-nav">
-            <nav class="navbar bg-dark navbar-expand-lg navbar-dark">
-                <a class="navbar-brand" href="Main.html"><i class="far fa-circle"></i>  Library</a>
+            <nav class="navbar navbar-expand navbar-custom">
+                <a class="navbar-brand" href="{% url 'main' %}"><i class="far fa-circle"></i>  Library</a>
                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="Main.html">Explore</a>
+                        <a class="nav-link" href="{% url 'main' %}">Explore</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'login' %}">Login</a>
@@ -102,7 +102,7 @@
       </div>            
       </div>
     </section>
-    <section id = "footer">
+    <section id = "footer" style = "position: absolute; bottom: 0; width: 100%;" >
         <div class = "footer">
             <i class="footer-img fab fa-facebook"></i>
             <i class="footer-img fab fa-twitter"></i>

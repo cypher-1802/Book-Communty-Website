@@ -62,11 +62,11 @@
       <!-- NAVBAR-SECTION -->
     <section id ="Navbar">
       <nav class="navbar bg-dark navbar-expand navbar-dark">
-          <a class="navbar-brand" href="Main.html"><i class="far fa-circle"></i> Library</a>
+          <a class="navbar-brand" href="{% url 'main' %}"><i class="far fa-circle"></i> Library</a>
 
               <ul class="navbar-nav ms-auto">
                   <li class="nav-item">
-                      <a class="nav-link" href="Main.html">Explore</a>
+                      <a class="nav-link" href="{% url 'main' %}">Explore</a>
                   </li>
                   <li class="nav-item">
                       <a class="nav-link" href="{% url 'login' %}">Login</a>

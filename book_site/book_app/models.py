@@ -1,13 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.utils.timezone import now
 import os, random
 
 # Create your models here.
 class Book_User(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
     image = models.ImageField(upload_to = 'images/users', default = 'images/default/' + random.choice(os.listdir(path = 'media/images/default')))
-    bio = models.CharField(null = True, max_length = 100)
+    bio = models.CharField(null = True, blank = True, max_length = 100)
     to_read_list = models.TextField(null = True, blank = True)
     library = models.TextField(null = True, blank = True)
 
@@ -41,18 +40,3 @@ class Add_Books(models.Model):
 
     def __str__(self):
         return str(self.book_id)
- 
-class Books(models.Model):
-    ISBN = models.CharField(null = True, max_length = 20)
-    name = models.CharField(null = True, max_length = 40)
-    cover = models.ImageField(upload_to = None)
-    author = models.CharField(null = True, max_length = 20)
-    genre = models.CharField(null = True, max_length = 20)
-    summary = models.TextField(null = True)
-    #rating = models.
-    discussion = models.ForeignKey(Discussion, null = True, on_delete = models.CASCADE)
-    read = models.ForeignKey(Read, null = True, on_delete = models.CASCADE)
-    trade = models.ForeignKey(Add_Books, null = True, on_delete = models.CASCADE)
-
-    def __str__(self):
-        return str(self.ISBN)

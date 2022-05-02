@@ -1,11 +1,16 @@
-body{
-    color: #13547a;
+
+/* NAVBAR-FOOTER */
+  .navbar-custom{
+    background-color: #00c6c6;
+    color: white;
+
   }
-  
-  /* NAVBAR-FOOTER */
-  
+  .nav-link{
+    color: white;
+  }
   .navbar-brand{
       margin-left: 15px;
+      color: whitesmoke;
     }
   .navbar-nav{
     margin:auto;
@@ -16,15 +21,16 @@ body{
     .avatar{
       border-radius: 50%;
       background-color: black;
-      height: 50px;
-      width: 50px;
+      height: 35px;
+      width: 35px;
       margin-right: 15px;
     }
+    
   
     /* FOOTER */
     .footer{
       text-align: center;
-      background-color:lightblue;
+      background-color: rgb(225, 167, 167);
       width: 100%;
     }
     .footer-img{

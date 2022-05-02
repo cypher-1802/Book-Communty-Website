@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import requests, wikipedia
-from .models import Book_User, Read, Discussion, Add_Books, Books
+from .models import Book_User, Read, Discussion, Add_Books
 
 
 #------------------------------------------------------------------------------------------------------------------------------------
@@ -47,6 +47,8 @@ def user_signup(request):
             user.save()
             
             u = Book_User(user = user)
+            u.to_read_list = ''
+            u.library = ''
             u.save()
             
             return redirect('login')
@@ -55,24 +57,44 @@ def user_signup(request):
 
 def user_logout(request):
     logout(request)
-    return redirect('home')
+    return redirect('main')
 
 #------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------
 
-#@login_required(login_url = 'login')
+@login_required(login_url = 'login')
 def home(request):
+
+    #Search books
     if request.method == "POST":
         name = request.POST['name']
         return search(request, name)
+
+    #Search among genres
+    gnr = "Science Fiction"  #default book
+
+    #fetch from the frontend
+
+    L = genre(gnr, '10', 'newest')
+
     return render(request, 'home.html')
 
 def main(request):
+    #Search books
+    if request.method == "POST":
+        name = request.POST['name']
+        return search(request, name)
+    #Search among genres
+    gnr = "Science Fiction"  #default book
+
+    #fetch from the frontend
+
+    L = genre(gnr, '10', 'newest')
     return render(request, 'Main.html')
 
 def search(request, name):
     #API CALL
-    response = requests.get('https://www.googleapis.com/books/v1/volumes?q=intitle:'+name+'&key=AIzaSyC887_T5c9ZEkD9tMzzDB2e_1Dv_5sJ7L0').json()['items']
+    response = requests.get('https://www.googleapis.com/books/v1/volumes?q=intitle:'+name+'&maxResults=12&key=AIzaSyC887_T5c9ZEkD9tMzzDB2e_1Dv_5sJ7L0').json()['items']
     L = dict_creator(response)
 
     return render(request, 'search.html', {'response':L})
@@ -95,11 +117,19 @@ def book_preview(request, id):  # renders the book details. Records to_read and 
         result = wikipedia.summary("{}(Author) ".format(auth))
 
 #--------------------------------------Sorting wrt Genre and Author---------------------------------------------------------------------------------
+    try:
+        gnr = response['categories'][0]
+    except:
+        gnr = None
 
-    gnr = response['categories'][0]
-
-    s_auth = author(auth, '3', 'relevance')
-    s_genre = genre(gnr, '3', 'relevance')
+    try:
+        s_auth = author(auth, '3', 'relevance')
+    except:
+        s_auth = None
+    try:
+        s_genre = genre(gnr, '3', 'relevance')
+    except:
+        s_genre = None
 
 #--------------------------------Discussion Objects Display-------------------------------------------------------------------------
 
@@ -126,7 +156,7 @@ def book_preview(request, id):  # renders the book details. Records to_read and 
 
                 if (to_read is not None) or (finished is not None):
                     
-                    data = response['title'] + "*"
+                    data = response['title'] + "**"
 
                     if to_read is not None:
                         tr = True
@@ -162,7 +192,6 @@ def book_preview(request, id):  # renders the book details. Records to_read and 
                 d.save()
                 return render(request, 'book_preview.html', {'response':response, 'discussion':discussion, 'result':result, 'id':id['id'], 's_genre':s_genre, 's_auth':s_auth})
 
-
     except:
         pass
     
@@ -171,24 +200,12 @@ def book_preview(request, id):  # renders the book details. Records to_read and 
 #------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------
 
+@login_required
 def trade(request, id):
 
 #--------------------------------Displays added Books--------------------------------------------------------------------------------
 
-    if Add_Books.objects.filter(book_id = id).exists():
-        add = Add_Books.objects.filter(book_id = id)
-        return render(request, 'trade.html', {'add':add, 'id':id})
-
-    else:
-        return render(request, 'trade.html', {'id':id})
-
-#------------------------------------------------------------------------------------------------------------------------------------
-#------------------------------------------------------------------------------------------------------------------------------------
-
-@login_required
-def add_books(request, id):
-
-#--------------------------------Opens page for adding books------------------------------------------------------------------------------------
+    response = requests.get('https://www.googleapis.com/books/v1/volumes/'+id+'?key=AIzaSyC887_T5c9ZEkD9tMzzDB2e_1Dv_5sJ7L0').json()['volumeInfo']
 
     if request.method == "POST":
         format = request.POST.get('format')
@@ -198,15 +215,50 @@ def add_books(request, id):
         add = Add_Books(username = Book_User.objects.get(user = request.user), book_id = id, format = format, contact = contact, message = message)
         add.save()
 
-        return render(request, 'add.html', {'id':id})
 
-    return render(request, 'add.html', {'id':id})
+    if Add_Books.objects.filter(book_id = id).exists():
+        add = Add_Books.objects.filter(book_id = id)
+        return render(request, 'trade.html', {'add':add, 'id':id, 'response':response})
+
+    else:
+        return render(request, 'trade.html', {'id':id, 'response':response})
+
+#-------------------------------------USER PROFILE-----------------------------------------------------------------------------------
 
 def profile(request):
-    pass
+    #pass
+
+    reader = Book_User.objects.get(user = request.user)
+
+    # extracting readlist and collection
+    readlist = reader.to_read_list
+    collection = reader.library
+
+    L1 = readlist.split("*")   #list of to read books
+    L2 = collection.split("*") #list of already read books
+
+    return HttpResponse("hehe")
+
+
+    # if bio is entered
+    # reader.bio = ''#entered value
+
+    # #if photu is uploaded
+    # reader.image = ''
+
+    # reader.save()
+
+#-------------------------------------TRADE PAGE(on search)--------------------------------------------------------------------------
 
 def trd(request):
-    pass
+    if request.method == "POST":
+        name = request.POST.get('name')
+
+        response = requests.get('https://www.googleapis.com/books/v1/volumes?q=intitle:'+name+'&maxResults=8&key=AIzaSyC887_T5c9ZEkD9tMzzDB2e_1Dv_5sJ7L0').json()['items']
+        L = dict_creator(response)
+
+        return render(request, 'trd.html', {'response':L})
+    return render(request, "trd.html")
 
 #--------------------------------Displays book by Genre------------------------------------------------------------------------------------
 def genre(genre, n, order):
@@ -246,3 +298,6 @@ def dict_creator(response):
         L.append(D)
 
     return L
+
+def team(request):
+    return render(request, 'team.html')

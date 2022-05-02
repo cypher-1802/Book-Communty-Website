@@ -1,0 +1,110 @@
+  /* Sub-Section */
+  .sub-sec{
+    text-align: center;
+    padding: 3% 0%;
+    background-image: url(../subimage.jpg);
+  }
+  .sub-button{
+    margin-top: 10px;
+    padding: 0.2%;
+    border-radius: 10%;
+  }
+
+ 
+
+ .tradeo-bg{
+	margin-top: 10px;
+
+	width: 80%;
+
+	margin: auto;
+
+	background-color: #EFEFEF;
+
+}
+
+
+.srcBox{
+
+	margin-left: 10%;
+	/*margin-right: 10%;*/
+	margin-top: 40px;
+
+	margin-bottom: 20px;
+
+	width: 80%;
+ 
+ 	height: 40px;
+  
+}
+
+
+.most-traded-books-head{
+	text-align: center;
+}
+
+.rounded-box{
+	margin-right: 5%;
+	margin-left: 5%;
+	width: 90%;
+	/*padding: 2%;
+	border: solid;
+	border-radius: 10px;*/
+}
+
+.row-parent{
+	display: flex;
+}
+
+.row-bk-img{
+	margin: auto;
+	margin-bottom: 5%;
+	height: auto;
+	width: 20%;
+}
+.tradebutton{
+  /*width: 40%;*/
+  /*height: 3em;*/
+  position: relative;
+  /*top: 1px;*/
+  background-color: rgb(18, 219, 78);
+  border: none;
+  border-radius: 5px;
+  color: rgb(255, 255, 255);
+  /*margin-bottom: 1vw;*/
+  cursor: pointer;
+  margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 40px;
+
+	margin-bottom: 20px;
+
+	width:30px;
+ 
+ 	height: 40px;
+}
+
+.src-go-parent{
+  display:flex;
+  margin: auto;
+  /* width:50%;  */
+}
+
+/* FOOTER */
+
+.footer{
+    text-align: center;
+    padding: 1%;
+    background-color:lightblue;
+  }
+  .footer-img{
+    margin: 1% 3% 1% ;
+  }
+  
+  .bg{
+      display: flex;
+      margin-top: 0;
+      width: 80%;
+      margin: auto;
+      background-color: #FFEDDB
+  }

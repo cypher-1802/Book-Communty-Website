@@ -36,14 +36,14 @@
     <section id ="Navbar">
         <div class ="container-nav">
             <nav class="navbar bg-dark navbar-expand-lg navbar-dark">
-                <a class="navbar-brand" href="Main.html"><i class="far fa-circle"></i>  Library</a>
+                <a class="navbar-brand" href="{% url 'home' %}"><i class="far fa-circle"></i>  Library</a>
                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="Main.html">Explore</a>
+                        <a class="nav-link" href="{% url 'home' %}">Explore</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'login' %}">Login</a>
@@ -85,6 +85,7 @@
 					<p>{{response.description|safe}}</p>
 				</div>
 
+				<!-- READLIST AND COLLECTION -->
 				{% if request.user.is_authenticated %}
 					<form method = "POST">
 						{% csrf_token %}
@@ -105,11 +106,10 @@
 		{% for message in discussion %}
 		<div class = "box bottom-line-drawer-b">
 			<div class = "hz-property">
-				<img class = "profile-img" src = "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1344409006l/142296.jpg">
+				<img class = "profile-img" src = {{message.username.image.url}}>
 				<div class = "profile-text">
 					<p style="margin: 0px;">{{message.username.user.username}}</p>
 					<p style="margin: 0px;">Posted on : {{message.created_on}}</p>
-					<p style="margin: 0px;">Bio or whatever</p>
 				</div>
 			</div>
 			<p class = "opinion">{{message.message}}</p>

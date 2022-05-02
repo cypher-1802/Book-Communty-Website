@@ -31,7 +31,7 @@
 .tradeo-bg{
 margin-top: 10px;
 
-width: 80%;
+max-width: 90vw;
 
 margin: auto;
 
@@ -70,6 +70,9 @@ border-radius: 10px;*/
 
 .row-parent{
 display: flex;
+flex-flow: wrap;
+max-width: 90vw;
+/* border: solid;  */
 }
 
 .bk-info{
@@ -77,11 +80,14 @@ text-align: center;
 }
 
 .row-bk-img{
-margin: auto;
 margin-bottom: 5%;
-height: 60%;
-width: auto;
+margin: auto;
+height: auto;
+/* border: solid; */
+/* width: 30%; */
+max-width: 12vw;
 }
+
 .tradebutton{
   position: relative;
   /*top: 1px;*/
@@ -91,7 +97,7 @@ width: auto;
   color: rgb(255, 255, 255);
   /*margin-bottom: 1vw;*/
   cursor: pointer;
-  margin-left: 10%;
+  margin-left: 2%;
   margin-right: 10%;
   margin-top: 40px;
   margin-bottom: 20px;
@@ -108,6 +114,9 @@ width: auto;
 .bk-img-desc-parent{
 display: flex;
 flex-direction: column;
+/* border: solid;  */
+width: 33%;
+min-width: 20vw;
 }
 
 .bg{
