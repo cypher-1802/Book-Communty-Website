@@ -248,6 +248,35 @@ def profile(request):
 
     # reader.save()
 
+#---------------------------------------------FOLLOWING------------------------------------------------------------------------------
+
+def following(request, reader):
+
+    reader = Book_User.objects.get(user = request.user)
+    f_list = reader.following
+    following_list = f_list.split("**")
+    
+    return following_list
+
+#---------------------------------------------FOLLOWERS------------------------------------------------------------------------------
+
+def following(request, reader):
+
+    reader = Book_User.objects.get(user = request.user)
+    f_list = reader.followers
+    followers_list = f_list.split("**")
+    
+    return followers_list
+    
+    
+#----------------------------------------------FOLLOW--------------------------------------------------------------------------------
+
+def follow(request, name):
+
+    reader = Book_User.objects.get(user = request.user)
+    reader.following += name + "**"
+    reader.save()
+
 #-------------------------------------TRADE PAGE(on search)--------------------------------------------------------------------------
 
 def trd(request):
