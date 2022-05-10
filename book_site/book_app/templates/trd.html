@@ -52,9 +52,9 @@ not responsive
                     </li> 
                 </ul>
   
-                <a href="./profilePgNew(1).html"><span><img class="avatar" src= "../Avatar.png"></span> </a>
+                <span><a href="{% url 'profile' %}"><img class="avatar" src= "{{reader.image.url}}"></a></span>
         </nav>      
-  </section>
+  </section>	
 
 <div class = "tradeo-bg">
     <form method = "POST">

@@ -66,15 +66,9 @@
 
     <!-- NAVBAR-SECTION -->
     <section id ="Navbar">
-        <div class ="container-nav">
-
-            <nav class="navbar bg-dark navbar-expand-lg navbar-dark">
-                <a class="navbar-brand" href="{% url 'home' %}"><i class="far fa-circle"></i>  Library</a>
-                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-            
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <nav class="navbar navbar-expand navbar-custom">
+            <a class="navbar-brand" href="{% url 'home' %}"><i class="far fa-circle"></i> Library</a>
+  
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'home' %}">Home</a>
@@ -82,19 +76,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'trd' %}">Trade</a>
                     </li>
-                    <li class="signup nav-item nav1">
-                        <a class="nav-link" href="">Us</a>
-                    </li>
-                </ul>   
-
-            </div>
-            <div class="dropdown">
-                <span><img class="avatar" src= "/Avatar.png"></span>
-            </div>
-            </nav>
-        </div>      
-    </section>
+                    <li class="signup nav-item">
+                        <a class="nav-link" href="{% url 'team' %}">Us</a>
+                    </li> 
+                </ul>
   
+                <span><a href="{% url 'profile' %}"><img class="avatar" src= "{{reader.image.url}}"></a></span>
+        </nav>      
+  </section>	
+
 
 <div class = "tradeo-bg">
     <!-- <div class="src-go-parent">  -->

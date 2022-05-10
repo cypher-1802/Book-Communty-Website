@@ -1,0 +1,167 @@
+﻿{% load static %}
+{% load social_share %}
+<html>
+    <head>
+    <!-- Bootstrap stylesheet -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704
+    +h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>  
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>  
+
+    
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/b1fb33998f.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/solid.css">
+
+
+    <!-- CSS-stylesheet -->
+    <link rel= "stylesheet" href="{% static 'CSS/profileCSSNew.css' %}">
+    <link rel= "stylesheet" href="{% static 'CSS/nav-footer.css' %}">
+
+
+
+</head>
+
+<!---profile pic above
+	bio left
+	windows right 
+	
+-->
+
+<!--
+Issues: shift bio-info down/ add Name on top/ add change prof pic button below pic/ 
+
+-->
+
+  <!-- BODY -->
+  <body>
+    
+
+    <!-- NAVBAR-SECTION -->
+    <section id ="Navbar">
+        <nav class="navbar navbar-expand navbar-custom">
+            <a class="navbar-brand" href="{% url 'home' %}"><i class="far fa-circle"></i> Library</a>
+  
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'trd' %}">Trade</a>
+                    </li>
+                    <li class="signup nav-item">
+                        <a class="nav-link" href="{% url 'team' %}">Us</a>
+                    </li> 
+                </ul>
+  
+                <span><a href="{% url 'profile' %}"><img class="avatar" src= "{{reader.image.url}}"></a></span>
+        </nav>      
+  </section>	
+
+<div class = "bg">
+    <div class = "main-cont">
+	<div class = "users-info-bg">
+		<div class="users-info">
+			<img class = "prof-img" src = "{{reader.image.url}}">
+                
+                <div class = "greet-stat"> 
+                    <div class = "greet">
+                        <h5>{{reader.user.username}}</h5>
+                    </div>           
+                    
+                    <div class = "stats">
+                        <div class = "followers">
+                            <p>N Followers</p>
+                        </div>
+
+                        <div class = "following">
+                            <p>N Following</p>
+                        </div>
+
+                        <div class = "books-read">
+                            <p>N Books Read</p>
+                        </div>
+
+                        <div class = "books-traded">
+                            <p>N Books Traded</p>
+                        </div>
+                    </div>
+                </div>
+				
+		</div>
+
+
+	</div>	
+
+    <div class = "personal-bio-parent">
+
+        <div class = "bio-other-stuff">
+            <div class = "bottom-line">
+                <p><b>Bio:&nbsp</b>
+                {{reader.bio}}</p>
+            </div>
+
+            <br>    
+
+            <h3>Settings</h3>
+            <p>General</p>
+            <p>Invite a Friend</p>
+            <p>Rate us!</p>
+            <p>
+                {% post_to_facebook object_or_url %}
+                {% post_to_whatsapp  object_or_url %}
+                {% post_to_linkedin object_or_url %}
+                {% post_to_twitter object_or_url %}
+                {% post_to_telegram "New Song: " object_or_url %}
+            </p>
+            <a href = "{% url 'logout' %}"><p>Logout</p></a>
+        </div>    
+
+        <div class = "bk-info-parent">
+            <div class = "personal-bk-info">
+                <h3>Your Reading List</h3>
+                <ol>
+                    {% for i in readlist %}
+                    <li>{{i}}</li>
+                    {% endfor %}
+                    </ol>
+            </div>   
+            
+            <div class = "personal-bk-info">
+                <h3>Your Collection</h3>
+                <ol>
+                    {% for i in collection %}
+                    <li>{{i}}</li>
+                    {% endfor %}
+                    </ol>
+            </div>   
+        
+        </div> 
+        
+        
+    </div>
+</div>
+</div>	
+
+
+
+
+<section id = "footer">
+        <div class = "footer">
+            <i class="footer-img fab fa-facebook"></i>
+            <i class="footer-img fab fa-twitter"></i>
+            <i class="footer-img fab fa-instagram"></i>
+            <i class="footer-img fas fa-envelope"></i>
+            <p class = "footer-text">� Copyright 2022 PBL</p>
+        </div>
+    </section>
+</body>
+</html>
+

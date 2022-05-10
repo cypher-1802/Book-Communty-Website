@@ -1,7 +1,4 @@
-<!---
-ISSUES:
-not responsive
---->
+
 {% load static %}
 <html>
   <head>
@@ -37,34 +34,24 @@ not responsive
 
     <!-- NAVBAR-SECTION -->
     <section id ="Navbar">
-        <div class ="container-nav">
+      <nav class="navbar navbar-expand navbar-custom">
+          <a class="navbar-brand" href="{% url 'home' %}"><i class="far fa-circle"></i> Library</a>
 
-            <nav class="navbar bg-dark navbar-expand-lg navbar-dark">
-                <a class="navbar-brand" href="{% url 'home' %}"><i class="far fa-circle"></i>  Library</a>
-                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-           
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'trd' %}">Trade</a>
-                    </li>
-                    <li class="signup nav-item nav1">
-                        <a class="nav-link" href="">Who we are</a>
-                    </li>
-                </ul>  
+              <ul class="navbar-nav ms-auto">
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'home' %}">Home</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'trd' %}">Trade</a>
+                  </li>
+                  <li class="signup nav-item">
+                      <a class="nav-link" href="{% url 'team' %}">Us</a>
+                  </li> 
+              </ul>
 
-            </div>
-            <div class="dropdown">
-                <span><img class="avatar" src= "/Avatar.png"></span>
-            </div>
-            </nav>
-        </div>      
-    </section>
+              <span><a href="{% url 'profile' %}"><img class="avatar" src= "{{reader.image.url}}"></a></span>
+      </nav>      
+</section>
  
 
 <div class = "tradeo-bg">
@@ -75,21 +62,21 @@ not responsive
 
 <div class = "row-parent">
       <div class = "bk-img-desc-parent">
-        <img class = "row-bk-img" src = "http://cdn.shopify.com/s/files/1/0151/0741/products/c06ae611c44a977f9ec20cfc1d20eb6e_1024x1024.jpg?v=1578647782">
+        <img class = "row-bk-img" src = "{% static '../media/images/team/Arman.jpeg' %}">
         <div class = "bk-info">
           <h6><b>Arman Sayyed</b></h6>
         </div>
       </div>  
      
       <div class = "bk-img-desc-parent">
-        <img class = "row-bk-img"src = "http://cdn.shopify.com/s/files/1/0151/0741/products/c06ae611c44a977f9ec20cfc1d20eb6e_1024x1024.jpg?v=1578647782">
+        <img class = "row-bk-img"src = "{% static '../media/images/team/Garima.jpeg' %}">
         <div class = "bk-info">
           <h6><b>Garima Rathi</b></h6>
         </div>
       </div>
      
       <div class = "bk-img-desc-parent">
-        <img class = "row-bk-img"src = "http://cdn.shopify.com/s/files/1/0151/0741/products/c06ae611c44a977f9ec20cfc1d20eb6e_1024x1024.jpg?v=1578647782">
+        <img class = "row-bk-img"src = "{% static '../media/images/team/Rahul.jpeg' %}">
         <div class = "bk-info">
           <h6><b>Rahul Sakharkar</b></h6>
         </div>
@@ -103,14 +90,14 @@ not responsive
 <div class = "row-parent">
    
       <div class = "bk-img-desc-parent">
-        <img class = "row-bk-img" src = "{% static '../media/images/team/Safiya.jpg' %}">
+        <img class = "row-bk-img" src = "{% static '../media/images/team/Safiya.jpeg' %}">
         <div class = "bk-info">
           <h6><b>Safiya Amin</b></h6>
         </div>
       </div>  
 
       <div class = "bk-img-desc-parent">
-        <img class = "row-bk-img" src = "http://cdn.shopify.com/s/files/1/0151/0741/products/c06ae611c44a977f9ec20cfc1d20eb6e_1024x1024.jpg?v=1578647782">
+        <img class = "row-bk-img" src = "{% static '../media/images/team/Samyak.jpeg' %}">
         <div class = "bk-info">
           <h6><b>Samyak Jain</b></h6>
         </div>

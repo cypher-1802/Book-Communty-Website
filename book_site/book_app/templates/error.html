@@ -1,0 +1,14 @@
+{% load static %}
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="refresh" content="3;url='{% url 'login' %}'" />
+</head>
+
+<body>
+    {% if message %}
+    <h2><b>{{message}}</b></h2><br>
+    {% endif %}
+    <h3>Redirecting to Login Page...</h3>
+
+</body>
+</html>

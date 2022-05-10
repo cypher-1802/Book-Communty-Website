@@ -15,6 +15,7 @@ constantly==15.1.0
 cryptography==36.0.2
 daphne==3.0.2
 Django==4.0.4
+django-social-share==2.2.1
 hiredis==2.0.0
 hyperlink==21.0.0
 idna==3.3

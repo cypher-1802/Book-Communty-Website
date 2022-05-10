@@ -57,7 +57,7 @@
     <!-- Navbar -->
     <!-- NAVBAR-SECTION -->
     <section id ="Navbar">
-      <nav class="navbar bg-dark navbar-expand navbar-dark">
+      <nav class="navbar navbar-expand navbar-custom">
           <a class="navbar-brand" href="{% url 'home' %}"><i class="far fa-circle"></i> Library</a>
 
               <ul class="navbar-nav ms-auto">
@@ -72,9 +72,9 @@
                   </li> 
               </ul>
 
-                    <span><img class="avatar" src= "/Avatar.png"></span>
+              <span><a href="{% url 'profile' %}"><img class="avatar" src= "{{reader.image.url}}"></a></span>
       </nav>      
-</section>
+</section>	
 
     <!-- BODY  -->
     <form method = "POST">

@@ -67,18 +67,18 @@ display: flex;
   text-align: center;
 }
 
-.row-bk-img{
-margin: auto;
-margin-bottom: 5%;
-height: auto;
-width: 50%;
-border-radius: 50%;
-}
 
 .bk-img-desc-parent{
   margin: auto;
   display: flex;
   flex-direction: column;
+}
+
+.bk-img{
+  margin: auto;
+  width: 50%;
+  height: 50%;
+  
 }
 
 /* FOOTER */

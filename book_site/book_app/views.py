@@ -8,7 +8,7 @@ from .models import Book_User, Read, Discussion, Add_Books
 
 
 #------------------------------------------------------------------------------------------------------------------------------------
-#------------------------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------USER LOGIN-------------------------------------------------------
 
 # Create your views here.
 def user_login(request):
@@ -22,12 +22,12 @@ def user_login(request):
             login(request, user)
             return redirect('home')
         else:
-            return HttpResponse("User not found")#modification required
+            return error(request, "User not found!!!")
 
     return render(request, 'login.html')
 
 #------------------------------------------------------------------------------------------------------------------------------------
-#------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------USER SIGNUP----------------------------------------------------------
 
 def user_signup(request):
     if request.method == 'POST':
@@ -38,6 +38,9 @@ def user_signup(request):
         last_name = request.POST['last_name']
         password = request.POST['password']
         confirm_password = request.POST['confirm_password']
+
+        if User.objects.filter(username = username).first() is not None:
+            return error(request, 'User already exists. Please Login!!!')
 
         if password == confirm_password:
             user = User.objects.create_user(username, email, password)
@@ -62,8 +65,16 @@ def user_logout(request):
 #------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------
 
+def error(request, message):
+    return render(request, 'error.html', {'message':message})
+
+#------------------------------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------------------
+
 @login_required(login_url = 'login')
 def home(request):
+
+    reader = Book_User.objects.get(user = request.user)
 
     #Search books
     if request.method == "POST":
@@ -77,7 +88,7 @@ def home(request):
 
     L = genre(gnr, '10', 'newest')
 
-    return render(request, 'home.html')
+    return render(request, 'home.html', {'reader':reader})
 
 def main(request):
     #Search books
@@ -94,16 +105,19 @@ def main(request):
 
 def search(request, name):
     #API CALL
+    reader = Book_User.objects.get(user = request.user)
     response = requests.get('https://www.googleapis.com/books/v1/volumes?q=intitle:'+name+'&maxResults=12&key=AIzaSyC887_T5c9ZEkD9tMzzDB2e_1Dv_5sJ7L0').json()['items']
     L = dict_creator(response)
 
-    return render(request, 'search.html', {'response':L})
+    return render(request, 'search.html', {'response':L, 'reader':reader})
 
 #------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------
 
 #*************************
 def book_preview(request, id):  # renders the book details. Records to_read and library of user and opens discussion forum.
+
+    reader = Book_User.objects.get(user = request.user)
 
     id = requests.get('https://www.googleapis.com/books/v1/volumes/'+id+'?key=AIzaSyC887_T5c9ZEkD9tMzzDB2e_1Dv_5sJ7L0').json()
     response = id['volumeInfo']
@@ -190,22 +204,24 @@ def book_preview(request, id):  # renders the book details. Records to_read and 
                 mess = request.POST.get('mess')
                 d = Discussion(username = Book_User.objects.get(user = request.user), book_id = id['id'], message = mess)
                 d.save()
-                return render(request, 'book_preview.html', {'response':response, 'discussion':discussion, 'result':result, 'id':id['id'], 's_genre':s_genre, 's_auth':s_auth})
+                return render(request, 'book_preview.html', {'response':response, 'discussion':discussion, 'result':result, 'id':id['id'], 's_genre':s_genre, 's_auth':s_auth, 'reader':reader})
 
     except:
         pass
     
-    return render(request, 'book_preview.html', {'response':response, 'discussion':discussion, 'result':result, 'id':id['id'], 's_genre':s_genre, 's_auth':s_auth})
+    return render(request, 'book_preview.html', {'response':response, 'discussion':discussion, 'result':result, 'id':id['id'], 's_genre':s_genre, 's_auth':s_auth, 'reader':reader})
 
 #------------------------------------------------------------------------------------------------------------------------------------
 #------------------------------------------------------------------------------------------------------------------------------------
 
-@login_required
+@login_required(login_url = 'login')
 def trade(request, id):
 
 #--------------------------------Displays added Books--------------------------------------------------------------------------------
 
     response = requests.get('https://www.googleapis.com/books/v1/volumes/'+id+'?key=AIzaSyC887_T5c9ZEkD9tMzzDB2e_1Dv_5sJ7L0').json()['volumeInfo']
+
+    reader = Book_User.objects.get(user = request.user)
 
     if request.method == "POST":
         format = request.POST.get('format')
@@ -218,13 +234,14 @@ def trade(request, id):
 
     if Add_Books.objects.filter(book_id = id).exists():
         add = Add_Books.objects.filter(book_id = id)
-        return render(request, 'trade.html', {'add':add, 'id':id, 'response':response})
+        return render(request, 'trade.html', {'add':add, 'id':id, 'response':response, 'reader':reader})
 
     else:
-        return render(request, 'trade.html', {'id':id, 'response':response})
+        return render(request, 'trade.html', {'id':id, 'response':response, 'reader':reader})
 
 #-------------------------------------USER PROFILE-----------------------------------------------------------------------------------
 
+@login_required(login_url = 'login')
 def profile(request):
     #pass
 
@@ -236,6 +253,8 @@ def profile(request):
 
     L1 = readlist.split("*")   #list of to read books
     L2 = collection.split("*") #list of already read books
+
+    return render(request, 'profile.html', {'reader':reader, 'readlist':L1, 'collection':L2})
 
     return HttpResponse("hehe")
 
@@ -329,4 +348,5 @@ def dict_creator(response):
     return L
 
 def team(request):
-    return render(request, 'team.html')
+    reader = Book_User.objects.get(user = request.user)
+    return render(request, 'team.html', {'reader':reader})

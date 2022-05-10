@@ -96,9 +96,9 @@
                               </div>
                           </div>
                           <input type="text" name="username" value="" class="texts form-control input-lg" placeholder="Username">  
-                          <input type="text" name="email" value="" class="texts form-control input-lg" placeholder="Your Email" />
-                          <input type="password" name="password" value="" class="texts form-control input-lg" placeholder="Password"  />
-                          <input type="password" name="confirm_password" value="" class="texts form-control input-lg" placeholder="Confirm Password">                  
+                          <input type="email" name="email" value="" class="texts form-control input-lg" placeholder="Your Email" />
+                          <input type="password" name="password" value="" class="texts form-control input-lg" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required />
+                          <input type="password" name="confirm_password" value="" class="texts form-control input-lg" placeholder="Confirm Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>                  
                           <div class="row">
                           </div>
                           <br />

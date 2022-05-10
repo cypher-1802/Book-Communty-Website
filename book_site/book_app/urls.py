@@ -15,7 +15,8 @@ urlpatterns = [
     path('trd', views.trd, name = 'trd'),
     path('trade/<str:id>', views.trade, name = 'trade'),
     path('team/', views.team, name = 'team'),
-    path('profile', views.profile, name = 'profile'),
+    path('profile/', views.profile, name = 'profile'),
+    path('error/', views.error, name = 'error'),
 ]
 
 if settings.DEBUG:
